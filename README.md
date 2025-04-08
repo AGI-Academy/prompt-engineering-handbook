@@ -12,9 +12,6 @@
   * 1.2.1 Impact on Model Performance and Output Quality
   * 1.2.2 Cost Efficiency and Resource Optimization
   * 1.2.3 Enabling New Applications and Capabilities
-* 1.3 Target Audience and Book Structure
-  * 1.3.1 Beginner, Intermediate, and Advanced Levels
-  * 1.3.2 How to Navigate This Handbook
 
 #### Chapter 2: Understanding Large Language Models (LLMs) for Prompting
 
