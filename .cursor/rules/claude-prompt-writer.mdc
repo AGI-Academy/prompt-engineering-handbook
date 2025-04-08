@@ -1,0 +1,37 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+# Prompt
+
+I'm writing a comprehensive book on prompt engineering based on this (table of contents)[../src/TOC.md]
+
+Could you please write the complete content for section [SECTION NUMBER]: [SECTION TITLE]?
+
+I'm looking for:
+- Thorough, educational content appropriate for a textbook chapter
+- Clear explanations with examples where helpful
+- Practical insights that readers can apply
+- References to current research or best practices where relevant
+- Approximately 800-1200 words (adjust as needed for the specific section)
+
+Please format the content with appropriate headings, paragraphs, and bullet points for readability.
+
+## Build Commands
+- No specific build process required for markdown documentation
+- Use `mdbook serve` for local preview if mdbook is installed
+- Document changes can be verified with markdown linters
+
+## Style Guidelines
+- Follow GitBook markdown format
+- File organization: chapters in `src` directory, with chapter_1.md format
+- Update SUMMARY.md once a file is created, following mdbook rule (https://rust-lang.github.io/mdBook/format/summary.html)
+- Heading structure: use `#` for main titles, `##` for sections, `###` for subsections
+- Lists: use `*` for bullet points, consistent indentation for nested lists
+- Code blocks: use triple backticks with language specification
+- Links: use relative paths between documents with markdown format `[text](mdc:path)`
+- Keep line length reasonable (under 100 characters)
+- Maintain consistent spacing between sections
+- Use clear, descriptive filenames that match content headings

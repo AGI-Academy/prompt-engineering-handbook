@@ -1,0 +1,6 @@
+[book]
+authors = ["hashd2035"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Prompt Engineering Handbook"
