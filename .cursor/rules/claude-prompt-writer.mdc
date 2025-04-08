@@ -5,7 +5,6 @@ alwaysApply: true
 ---
 
 # Prompt
-
 I'm writing a comprehensive book on prompt engineering based on this (table of contents)[../src/TOC.md]
 
 Could you please write the complete content for section [SECTION NUMBER]: [SECTION TITLE]?
