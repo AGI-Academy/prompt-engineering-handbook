@@ -1,0 +1,687 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Table of Contents - Prompt Engineering Handbook</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Prompt Engineering Handbook</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="table-of-contents"><a class="header" href="#table-of-contents">Table of Contents</a></h1>
+<h2 id="part-i-foundations-of-prompt-engineering"><a class="header" href="#part-i-foundations-of-prompt-engineering">Part I: Foundations of Prompt Engineering</a></h2>
+<h3 id="chapter-1-introduction-to-prompt-engineering"><a class="header" href="#chapter-1-introduction-to-prompt-engineering">Chapter 1: Introduction to Prompt Engineering</a></h3>
+<ul>
+<li>1.1 What is Prompt Engineering?
+<ul>
+<li>1.1.1 Defining Prompts and their Role</li>
+<li>1.1.2 The Importance of Prompt Engineering in the Age of LLMs</li>
+<li>1.1.3 The Evolution of Prompting Techniques</li>
+</ul>
+</li>
+<li>1.2 Why Prompt Engineering Matters
+<ul>
+<li>1.2.1 Impact on Model Performance and Output Quality</li>
+<li>1.2.2 Cost Efficiency and Resource Optimization</li>
+<li>1.2.3 Enabling New Applications and Capabilities</li>
+</ul>
+</li>
+</ul>
+<h3 id="chapter-2-understanding-large-language-models-llms-for-prompting"><a class="header" href="#chapter-2-understanding-large-language-models-llms-for-prompting">Chapter 2: Understanding Large Language Models (LLMs) for Prompting</a></h3>
+<ul>
+<li>2.1 A High-Level Overview of LLM Architecture
+<ul>
+<li>2.1.1 Transformer Networks and Attention Mechanisms (Simplified Explanation)</li>
+<li>2.1.2 Pre-training and Fine-tuning Processes</li>
+</ul>
+</li>
+<li>2.2 How LLMs Process and Respond to Prompts
+<ul>
+<li>2.2.1 Tokenization and Embedding</li>
+<li>2.2.2 The Role of Context Window</li>
+<li>2.2.3 Generative Process and Decoding Strategies (e.g., Sampling, Greedy Search)</li>
+</ul>
+</li>
+<li>2.3 Key Characteristics of LLMs Relevant to Prompting
+<ul>
+<li>2.3.1 Contextual Understanding</li>
+<li>2.3.2 Few-Shot Learning Capabilities</li>
+<li>2.3.3 Limitations and Biases</li>
+</ul>
+</li>
+<li>2.4 The Interplay Between Prompts and Model Parameters
+<ul>
+<li>2.4.1 Temperature and Creativity Control</li>
+<li>2.4.2 Top-p and Top-k Sampling Parameters</li>
+<li>2.4.3 Context Window and Prompt Length</li>
+<li>2.4.4 Model-Specific Parameter Optimization</li>
+<li>2.4.5 Parameter Tuning as a Prompt Engineering Tool</li>
+</ul>
+</li>
+</ul>
+<h3 id="chapter-3-basic-prompting-principles-for-beginners"><a class="header" href="#chapter-3-basic-prompting-principles-for-beginners">Chapter 3: Basic Prompting Principles for Beginners</a></h3>
+<ul>
+<li>3.1 Clarity and Specificity in Prompts
+<ul>
+<li>3.1.1 Avoiding Ambiguity and Vague Language</li>
+<li>3.1.2 Providing Sufficient Context</li>
+</ul>
+</li>
+<li>3.2 Defining the Task and Desired Output Format
+<ul>
+<li>3.2.1 Explicitly Stating the Goal</li>
+<li>3.2.2 Specifying the Output Structure (e.g., lists, tables, JSON)</li>
+</ul>
+</li>
+<li>3.3 Using Keywords and Instructions Effectively
+<ul>
+<li>3.3.1 Identifying Relevant Keywords</li>
+<li>3.3.2 Structuring Instructions Logically</li>
+</ul>
+</li>
+<li>3.4 Understanding the Impact of Prompt Length</li>
+<li>3.5 Iterative Prompt Refinement: A Beginner's Approach</li>
+</ul>
+<h2 id="part-ii-core-prompting-techniques-and-strategies"><a class="header" href="#part-ii-core-prompting-techniques-and-strategies">Part II: Core Prompting Techniques and Strategies</a></h2>
+<h3 id="chapter-4-zero-shot-prompting"><a class="header" href="#chapter-4-zero-shot-prompting">Chapter 4: Zero-Shot Prompting</a></h3>
+<ul>
+<li>4.1 Definition and Applications of Zero-Shot Prompting</li>
+<li>4.2 Crafting Effective Zero-Shot Prompts
+<ul>
+<li>4.2.1 Using Natural Language Instructions</li>
+<li>4.2.2 The Power of Question Formulation</li>
+</ul>
+</li>
+<li>4.3 Limitations and When to Use Zero-Shot Prompting</li>
+</ul>
+<h3 id="chapter-5-few-shot-prompting"><a class="header" href="#chapter-5-few-shot-prompting">Chapter 5: Few-Shot Prompting</a></h3>
+<ul>
+<li>5.1 The Concept of In-Context Learning</li>
+<li>5.2 Providing Demonstrations and Examples
+<ul>
+<li>5.2.1 Structuring Few-Shot Examples Effectively</li>
+<li>5.2.2 The Importance of Example Quality and Diversity</li>
+</ul>
+</li>
+<li>5.3 Different Formats of Few-Shot Prompts
+<ul>
+<li>5.3.1 Input-Output Pairs</li>
+<li>5.3.2 Chain-of-Thought Examples</li>
+</ul>
+</li>
+<li>5.4 Optimizing Few-Shot Prompts for Performance</li>
+</ul>
+<h3 id="chapter-6-chain-of-thought-cot-prompting"><a class="header" href="#chapter-6-chain-of-thought-cot-prompting">Chapter 6: Chain-of-Thought (CoT) Prompting</a></h3>
+<ul>
+<li>6.1 The Rationale Behind Chain-of-Thought</li>
+<li>6.2 Eliciting Step-by-Step Reasoning
+<ul>
+<li>6.2.1 Crafting Prompts that Encourage Thinking Process</li>
+<li>6.2.2 Using Phrases like "Let's think step by step"</li>
+</ul>
+</li>
+<li>6.3 Variations of Chain-of-Thought Prompting
+<ul>
+<li>6.3.1 Standard CoT</li>
+<li>6.3.2 Self-Consistency Decoding</li>
+<li>6.3.3 Program-Aided Language Models (PAL)</li>
+</ul>
+</li>
+<li>6.4 Applications of CoT for Complex Reasoning Tasks</li>
+</ul>
+<h3 id="chapter-7-instruction-following-and-task-decomposition"><a class="header" href="#chapter-7-instruction-following-and-task-decomposition">Chapter 7: Instruction Following and Task Decomposition</a></h3>
+<ul>
+<li>7.1 Providing Clear and Concise Instructions</li>
+<li>7.2 Breaking Down Complex Tasks into Smaller Sub-tasks
+<ul>
+<li>7.2.1 The Benefits of Task Decomposition</li>
+<li>7.2.2 Strategies for Identifying Sub-tasks</li>
+</ul>
+</li>
+<li>7.3 Orchestrating Multiple Prompts for Complex Workflows</li>
+</ul>
+<h3 id="chapter-8-role-playing-and-persona-prompting"><a class="header" href="#chapter-8-role-playing-and-persona-prompting">Chapter 8: Role-Playing and Persona Prompting</a></h3>
+<ul>
+<li>8.1 Assigning Roles and Perspectives to the LLM</li>
+<li>8.2 Defining the Characteristics and Behaviors of the Persona</li>
+<li>8.3 Using Role-Playing for Creative Writing, Problem Solving, and Simulations</li>
+<li>8.4 Combining Role-Playing with Other Prompting Techniques</li>
+</ul>
+<h3 id="chapter-9-prompting-for-different-output-formats"><a class="header" href="#chapter-9-prompting-for-different-output-formats">Chapter 9: Prompting for Different Output Formats</a></h3>
+<ul>
+<li>9.1 Generating Structured Data (JSON, XML, CSV)
+<ul>
+<li>9.1.1 Specifying the Schema and Structure</li>
+<li>9.1.2 Using Delimiters and Formatting Instructions</li>
+</ul>
+</li>
+<li>9.2 Generating Code in Various Programming Languages
+<ul>
+<li>9.2.1 Providing Language Specifications and Context</li>
+<li>9.2.2 Requesting Specific Code Structures and Functionality</li>
+</ul>
+</li>
+<li>9.3 Generating Creative Content (Stories, Poems, Scripts)
+<ul>
+<li>9.3.1 Setting the Tone, Style, and Genre</li>
+<li>9.3.2 Providing Constraints and Inspiration</li>
+</ul>
+</li>
+<li>9.4 Generating Summaries and Extractions
+<ul>
+<li>9.4.1 Specifying the Desired Length and Focus</li>
+<li>9.4.2 Using Keywords to Guide Summarization</li>
+</ul>
+</li>
+</ul>
+<h2 id="part-iii-best-practices-in-prompt-engineering"><a class="header" href="#part-iii-best-practices-in-prompt-engineering">Part III: Best Practices in Prompt Engineering</a></h2>
+<h3 id="chapter-10-principles-of-effective-prompt-design"><a class="header" href="#chapter-10-principles-of-effective-prompt-design">Chapter 10: Principles of Effective Prompt Design</a></h3>
+<ul>
+<li>10.1 Be Clear, Concise, and Specific</li>
+<li>10.2 Provide Necessary Context and Background Information</li>
+<li>10.3 Explicitly State the Desired Outcome and Format</li>
+<li>10.4 Use Positive Framing and Avoid Negations Where Possible</li>
+<li>10.5 Break Down Complex Tasks into Manageable Steps</li>
+<li>10.6 Iterate and Refine Prompts Based on Results</li>
+</ul>
+<h3 id="chapter-11-avoiding-common-prompting-pitfalls"><a class="header" href="#chapter-11-avoiding-common-prompting-pitfalls">Chapter 11: Avoiding Common Prompting Pitfalls</a></h3>
+<ul>
+<li>11.1 Prompt Injection and Security Considerations
+<ul>
+<li>11.1.1 Understanding Prompt Injection Attacks</li>
+<li>11.1.2 Mitigation Strategies and Best Practices</li>
+</ul>
+</li>
+<li>11.2 Reducing Bias and Ensuring Fairness in Outputs
+<ul>
+<li>11.2.1 Identifying Potential Sources of Bias in Prompts</li>
+<li>11.2.2 Techniques for Mitigating Bias</li>
+</ul>
+</li>
+<li>11.3 Addressing Hallucinations and Factuality Issues
+<ul>
+<li>11.3.1 Strategies for Grounding LLM Outputs</li>
+<li>11.3.2 Using External Knowledge Sources</li>
+</ul>
+</li>
+<li>11.4 Managing Prompt Length and Token Limits</li>
+<li>11.5 Avoiding Ambiguity and Misinterpretation</li>
+</ul>
+<h3 id="chapter-12-prompt-optimization-and-evaluation"><a class="header" href="#chapter-12-prompt-optimization-and-evaluation">Chapter 12: Prompt Optimization and Evaluation</a></h3>
+<ul>
+<li>12.1 Defining Evaluation Metrics for Prompt Performance
+<ul>
+<li>12.1.1 Task-Specific Metrics (e.g., Accuracy, F1-Score)</li>
+<li>12.1.2 Qualitative Evaluation and Human Feedback</li>
+</ul>
+</li>
+<li>12.2 Techniques for Iterative Prompt Optimization
+<ul>
+<li>12.2.1 Experimenting with Different Phrasing and Structures</li>
+<li>12.2.2 Analyzing Model Responses and Identifying Areas for Improvement</li>
+</ul>
+</li>
+<li>12.3 A/B Testing and Comparative Prompt Evaluation</li>
+<li>12.4 Tools and Platforms for Prompt Evaluation and Management</li>
+</ul>
+<h3 id="chapter-13-prompt-engineering-for-different-language-models"><a class="header" href="#chapter-13-prompt-engineering-for-different-language-models">Chapter 13: Prompt Engineering for Different Language Models</a></h3>
+<ul>
+<li>13.1 Understanding Model-Specific Strengths and Weaknesses</li>
+<li>13.2 Adapting Prompting Strategies for Different Architectures and Training Data</li>
+<li>13.3 Exploring Model Documentation and Best Practices</li>
+<li>13.4 Case Studies of Prompting for Specific Models (e.g., GPT-4, Gemini, Llama)</li>
+<li>13.5 General Strategies for Navigating Prompting Across Different Models</li>
+</ul>
+<h2 id="part-iv-advanced-prompt-engineering-techniques"><a class="header" href="#part-iv-advanced-prompt-engineering-techniques">Part IV: Advanced Prompt Engineering Techniques</a></h2>
+<h3 id="chapter-14-prompt-engineering-for-different-model-types"><a class="header" href="#chapter-14-prompt-engineering-for-different-model-types">Chapter 14: Prompt Engineering for Different Model Types</a></h3>
+<ul>
+<li>14.1 Prompting for Deep Search and Information Retrieval Models
+<ul>
+<li>14.1.1 Understanding Search Model Architectures and APIs</li>
+<li>14.1.2 Crafting Effective Search Queries as Prompts with Specific Parameters</li>
+<li>14.1.3 Utilizing Contextual Information and Filters for Precise Results</li>
+</ul>
+</li>
+<li>14.2 Prompting for Reasoning Models
+<ul>
+<li>14.2.1 Leveraging Models Specialized in Logical Inference and Problem Solving</li>
+<li>14.2.2 Structuring Prompts to Elicit Step-by-Step Reasoning</li>
+<li>14.2.3 Combining Reasoning with External Knowledge Sources through Prompting</li>
+</ul>
+</li>
+<li>14.3 Prompting for Long Context Models
+<ul>
+<li>14.3.1 Techniques for Effectively Utilizing Extended Context Windows</li>
+<li>14.3.2 Strategies for Managing and Summarizing Information within Long Prompts</li>
+<li>14.3.3 Prompting for Complex Document Analysis and Synthesis</li>
+</ul>
+</li>
+<li>14.4 Prompting for Multimodal Models (Image, Video, Audio, etc.)
+<ul>
+<li>14.4.1 Understanding Input Modalities and Prompting Interfaces</li>
+<li>14.4.2 Combining Textual Prompts with Image, Video, and Audio Inputs</li>
+<li>14.4.3 Prompting for Generation, Editing, and Understanding Across Modalities</li>
+</ul>
+</li>
+<li>14.5 Prompting for "Thinking" or Agent-Based Models
+<ul>
+<li>14.5.1 Designing Prompts to Define Agent Goals, Roles, and Constraints</li>
+<li>14.5.2 Implementing Prompting Strategies for Agent Interaction and Collaboration</li>
+<li>14.5.3 Managing Agent State, Memory, and Decision-Making through Prompts</li>
+</ul>
+</li>
+<li>14.6 Other Specialized Model Types and Prompting Considerations (e.g., Graph Models, Time Series Models)</li>
+<li>14.7 Prompt Optimization Techniques for Different Model Types
+<ul>
+<li>14.7.1 Identifying Model-Specific Prompting Best Practices</li>
+<li>14.7.2 Tailoring Prompt Structure and Content for Optimal Performance on Different Architectures</li>
+<li>14.7.3 Using Model-Specific Evaluation Metrics</li>
+</ul>
+</li>
+<li>14.8 Navigating the Model Landscape: A/B Testing and Model Selection
+<ul>
+<li>14.8.1 Designing Experiments to Compare the Performance of Different Models on Specific Tasks</li>
+<li>14.8.2 Utilizing Prompt Variations for Effective Model Comparison</li>
+<li>14.8.3 Establishing Criteria for Model Selection Based on Prompt Engineering Outcomes</li>
+</ul>
+</li>
+<li>14.9 Prompting New and Emerging Model Architectures
+<ul>
+<li>14.9.1 Strategies for Adapting to Novel Model Capabilities and Limitations</li>
+<li>14.9.2 Exploring Documentation and Community Resources for New Models</li>
+</ul>
+</li>
+</ul>
+<h3 id="chapter-15-retrieval-augmented-generation-rag"><a class="header" href="#chapter-15-retrieval-augmented-generation-rag">Chapter 15: Retrieval-Augmented Generation (RAG)</a></h3>
+<ul>
+<li>15.1 The Concept of Augmenting LLMs with External Knowledge</li>
+<li>15.2 Integrating Information Retrieval with Prompting Workflows</li>
+<li>15.3 Different Architectures and Implementations of RAG</li>
+<li>15.4 Crafting Prompts for Effective Knowledge Retrieval and Integration</li>
+<li>15.5 Cache Augmented Generation (CAG): Enhancing Efficiency and Coherence in RAG</li>
+</ul>
+<h3 id="chapter-16-fine-tuning-and-prompt-engineering-a-synergistic-approach"><a class="header" href="#chapter-16-fine-tuning-and-prompt-engineering-a-synergistic-approach">Chapter 16: Fine-Tuning and Prompt Engineering: A Synergistic Approach</a></h3>
+<ul>
+<li>16.1 When to Fine-Tune vs. Rely Solely on Prompt Engineering</li>
+<li>16.2 Combining Fine-Tuned Models with Optimized Prompts</li>
+<li>16.3 Data Preparation and Prompt Design for Fine-Tuning</li>
+<li>16.4 Evaluating the Impact of Fine-Tuning on Prompt Effectiveness</li>
+</ul>
+<h3 id="chapter-17-prompt-chaining-and-multi-agent-systems"><a class="header" href="#chapter-17-prompt-chaining-and-multi-agent-systems">Chapter 17: Prompt Chaining and Multi-Agent Systems</a></h3>
+<ul>
+<li>17.1 Orchestrating Sequences of Prompts for Complex Tasks</li>
+<li>17.2 Building Pipelines of LLM Interactions</li>
+<li>17.3 Designing Prompts for Effective Communication Between Agents</li>
+<li>17.4 Applications of Prompt Chaining and Multi-Agent Systems</li>
+</ul>
+<h3 id="chapter-18-prompt-engineering-for-code-generation-and-execution"><a class="header" href="#chapter-18-prompt-engineering-for-code-generation-and-execution">Chapter 18: Prompt Engineering for Code Generation and Execution</a></h3>
+<ul>
+<li>18.1 Advanced Techniques for Guiding Code Generation</li>
+<li>18.2 Using Prompts to Specify Constraints, Libraries, and Functionality</li>
+<li>18.3 Integrating Code Execution and Feedback Loops</li>
+<li>18.4 Prompting for Code Review and Debugging</li>
+</ul>
+<h3 id="chapter-19-prompt-engineering-for-creative-applications"><a class="header" href="#chapter-19-prompt-engineering-for-creative-applications">Chapter 19: Prompt Engineering for Creative Applications</a></h3>
+<ul>
+<li>19.1 Generating Novel and Engaging Narrative Content</li>
+<li>19.2 Prompting for Different Artistic Styles and Mediums</li>
+<li>19.3 Interactive Storytelling and Game Development with Prompts</li>
+<li>19.4 Exploring the Boundaries of AI Creativity through Prompting</li>
+</ul>
+<h3 id="chapter-20-prompt-engineering-for-reasoning-and-problem-solving"><a class="header" href="#chapter-20-prompt-engineering-for-reasoning-and-problem-solving">Chapter 20: Prompt Engineering for Reasoning and Problem Solving</a></h3>
+<ul>
+<li>20.1 Advanced Chain-of-Thought Techniques for Complex Reasoning</li>
+<li>20.2 Using Prompts to Guide Logical Deduction and Inference</li>
+<li>20.3 Prompting for Mathematical Problem Solving and Scientific Discovery</li>
+<li>20.4 Overcoming Common Reasoning Challenges with Prompt Design</li>
+</ul>
+<h2 id="part-v-prompt-engineering-for-specific-applications-and-domains"><a class="header" href="#part-v-prompt-engineering-for-specific-applications-and-domains">Part V: Prompt Engineering for Specific Applications and Domains</a></h2>
+<h3 id="chapter-21-prompt-engineering-for-chatbots-and-conversational-ai"><a class="header" href="#chapter-21-prompt-engineering-for-chatbots-and-conversational-ai">Chapter 21: Prompt Engineering for Chatbots and Conversational AI</a></h3>
+<ul>
+<li>21.1 Designing Prompts for Engaging and Natural Conversations</li>
+<li>21.2 Managing Context and Maintaining Dialogue Flow</li>
+<li>21.3 Prompting for Different Chatbot Personalities and Use Cases</li>
+<li>21.4 Handling Ambiguity and User Intent Recognition through Prompts</li>
+</ul>
+<h3 id="chapter-22-prompt-engineering-for-content-creation-and-marketing"><a class="header" href="#chapter-22-prompt-engineering-for-content-creation-and-marketing">Chapter 22: Prompt Engineering for Content Creation and Marketing</a></h3>
+<ul>
+<li>22.1 Generating Blog Posts, Articles, and Marketing Copy</li>
+<li>22.2 Prompting for Different Tones, Styles, and Target Audiences</li>
+<li>22.3 Optimizing Content for SEO using Prompt Engineering</li>
+<li>22.4 Generating Social Media Content and Engaging Captions</li>
+</ul>
+<h3 id="chapter-23-prompt-engineering-for-education-and-learning"><a class="header" href="#chapter-23-prompt-engineering-for-education-and-learning">Chapter 23: Prompt Engineering for Education and Learning</a></h3>
+<ul>
+<li>23.1 Creating Educational Materials and Explanations with Prompts</li>
+<li>23.2 Designing Interactive Learning Experiences</li>
+<li>23.3 Providing Personalized Feedback and Guidance through Prompting</li>
+<li>23.4 Generating Practice Questions and Assessments</li>
+</ul>
+<h3 id="chapter-24-prompt-engineering-for-healthcare-and-medicine"><a class="header" href="#chapter-24-prompt-engineering-for-healthcare-and-medicine">Chapter 24: Prompt Engineering for Healthcare and Medicine</a></h3>
+<ul>
+<li>24.1 Assisting with Medical Diagnosis and Treatment Planning (with appropriate caveats)</li>
+<li>24.2 Generating Patient Summaries and Medical Reports</li>
+<li>24.3 Facilitating Medical Research and Literature Review</li>
+<li>24.4 Ethical Considerations in Prompting for Healthcare</li>
+</ul>
+<h3 id="chapter-25-prompt-engineering-for-finance-and-business-intelligence"><a class="header" href="#chapter-25-prompt-engineering-for-finance-and-business-intelligence">Chapter 25: Prompt Engineering for Finance and Business Intelligence</a></h3>
+<ul>
+<li>25.1 Extracting Insights from Financial Data using Prompts</li>
+<li>25.2 Generating Business Reports and Analyses</li>
+<li>25.3 Assisting with Risk Assessment and Forecasting</li>
+<li>25.4 Prompting for Market Research and Competitive Analysis</li>
+</ul>
+<h3 id="chapter-26-prompt-engineering-for-scientific-research-and-discovery"><a class="header" href="#chapter-26-prompt-engineering-for-scientific-research-and-discovery">Chapter 26: Prompt Engineering for Scientific Research and Discovery</a></h3>
+<ul>
+<li>26.1 Formulating Research Questions and Hypotheses with Prompts</li>
+<li>26.2 Analyzing Scientific Data and Generating Interpretations</li>
+<li>26.3 Assisting with Literature Reviews and Identifying Research Gaps</li>
+<li>26.4 Prompting for Experiment Design and Simulation</li>
+</ul>
+<h2 id="part-vi-the-science-behind-prompt-engineering"><a class="header" href="#part-vi-the-science-behind-prompt-engineering">Part VI: The Science Behind Prompt Engineering</a></h2>
+<h3 id="chapter-27-understanding-the-mechanisms-of-in-context-learning"><a class="header" href="#chapter-27-understanding-the-mechanisms-of-in-context-learning">Chapter 27: Understanding the Mechanisms of In-Context Learning</a></h3>
+<ul>
+<li>27.1 Exploring Theories Behind Why Few-Shot Prompting Works</li>
+<li>27.2 The Role of Attention and Context in In-Context Learning</li>
+<li>27.3 Research on the Limits and Capabilities of In-Context Learning</li>
+</ul>
+<h3 id="chapter-28-the-impact-of-prompt-structure-and-phrasing-on-model-behavior"><a class="header" href="#chapter-28-the-impact-of-prompt-structure-and-phrasing-on-model-behavior">Chapter 28: The Impact of Prompt Structure and Phrasing on Model Behavior</a></h3>
+<ul>
+<li>28.1 Investigating the Sensitivity of LLMs to Prompt Variations</li>
+<li>28.2 Analyzing the Influence of Different Linguistic Features</li>
+<li>28.3 Understanding the Cognitive Biases Introduced by Prompt Design</li>
+</ul>
+<h3 id="chapter-29-prompt-engineering-and-model-interpretability"><a class="header" href="#chapter-29-prompt-engineering-and-model-interpretability">Chapter 29: Prompt Engineering and Model Interpretability</a></h3>
+<ul>
+<li>29.1 Using Prompts to Probe and Understand LLM Internal Representations</li>
+<li>29.2 Techniques for Eliciting Explanations and Reasoning Processes</li>
+<li>29.3 The Role of Prompting in Making LLMs More Transparent</li>
+</ul>
+<h3 id="chapter-30-the-relationship-between-prompt-engineering-and-human-cognition"><a class="header" href="#chapter-30-the-relationship-between-prompt-engineering-and-human-cognition">Chapter 30: The Relationship Between Prompt Engineering and Human Cognition</a></h3>
+<ul>
+<li>30.1 Drawing Parallels Between Prompt Design and Human Communication</li>
+<li>30.2 Understanding How Humans Formulate Instructions and Queries</li>
+<li>30.3 Leveraging Insights from Cognitive Science for Better Prompt Engineering</li>
+</ul>
+<h2 id="part-vii-recent-research-and-future-directions-in-prompt-engineering"><a class="header" href="#part-vii-recent-research-and-future-directions-in-prompt-engineering">Part VII: Recent Research and Future Directions in Prompt Engineering</a></h2>
+<h3 id="chapter-31-emerging-prompting-techniques-and-methodologies"><a class="header" href="#chapter-31-emerging-prompting-techniques-and-methodologies">Chapter 31: Emerging Prompting Techniques and Methodologies</a></h3>
+<ul>
+<li>31.1 Exploring Novel Approaches to Prompt Design and Optimization</li>
+<li>31.2 Research on Automated Prompt Generation and Discovery</li>
+<li>31.3 Meta-Prompting and Learning to Prompt</li>
+</ul>
+<h3 id="chapter-32-the-role-of-prompt-engineering-in-advancing-artificial-general-intelligence-agi"><a class="header" href="#chapter-32-the-role-of-prompt-engineering-in-advancing-artificial-general-intelligence-agi">Chapter 32: The Role of Prompt Engineering in Advancing Artificial General Intelligence (AGI)</a></h3>
+<ul>
+<li>32.1 Using Prompts to Unlock More Complex Reasoning and Problem-Solving Abilities</li>
+<li>32.2 The Potential of Prompt Engineering in Achieving Human-Level Intelligence</li>
+<li>32.3 Ethical Considerations for Advanced Prompting Techniques</li>
+</ul>
+<h3 id="chapter-33-open-challenges-and-future-research-directions-in-prompt-engineering"><a class="header" href="#chapter-33-open-challenges-and-future-research-directions-in-prompt-engineering">Chapter 33: Open Challenges and Future Research Directions in Prompt Engineering</a></h3>
+<ul>
+<li>33.1 Addressing Limitations of Current Prompting Techniques</li>
+<li>33.2 Exploring New Applications and Domains for Prompt Engineering</li>
+<li>33.3 The Future of Human-AI Collaboration through Prompting</li>
+</ul>
+<h2 id="part-viii-tools-and-resources-for-prompt-engineering"><a class="header" href="#part-viii-tools-and-resources-for-prompt-engineering">Part VIII: Tools and Resources for Prompt Engineering</a></h2>
+<h3 id="chapter-34-overview-of-prompt-engineering-platforms-and-tools"><a class="header" href="#chapter-34-overview-of-prompt-engineering-platforms-and-tools">Chapter 34: Overview of Prompt Engineering Platforms and Tools</a></h3>
+<ul>
+<li>34.1 Cloud-Based LLM APIs and Development Environments</li>
+<li>34.2 Open-Source Libraries and Frameworks for Prompt Management</li>
+<li>34.3 Tools for Prompt Evaluation, Optimization, and Visualization</li>
+</ul>
+<h3 id="chapter-35-building-your-own-prompt-engineering-toolkit"><a class="header" href="#chapter-35-building-your-own-prompt-engineering-toolkit">Chapter 35: Building Your Own Prompt Engineering Toolkit</a></h3>
+<ul>
+<li>35.1 Essential Skills and Knowledge for Prompt Engineers</li>
+<li>35.2 Recommended Resources for Learning and Staying Updated</li>
+<li>35.3 Contributing to the Prompt Engineering Community</li>
+</ul>
+<h2 id="appendices"><a class="header" href="#appendices">Appendices</a></h2>
+<h3 id="appendix-a-glossary-of-terms"><a class="header" href="#appendix-a-glossary-of-terms">Appendix A: Glossary of Terms</a></h3>
+<ul>
+<li>Definitions of Key Concepts and Terminology Used Throughout the Book</li>
+</ul>
+<h3 id="appendix-b-case-studies-and-real-world-examples"><a class="header" href="#appendix-b-case-studies-and-real-world-examples">Appendix B: Case Studies and Real-World Examples</a></h3>
+<ul>
+<li>In-depth Analysis of Successful Prompt Engineering Applications</li>
+</ul>
+<h3 id="appendix-c-further-reading-and-resources"><a class="header" href="#appendix-c-further-reading-and-resources">Appendix C: Further Reading and Resources</a></h3>
+<ul>
+<li>A Curated List of Relevant Research Papers, Articles, and Websites</li>
+</ul>
+<h3 id="appendix-d-practical-exercises-in-advanced-prompt-engineering"><a class="header" href="#appendix-d-practical-exercises-in-advanced-prompt-engineering">Appendix D: Practical Exercises in Advanced Prompt Engineering</a></h3>
+<ul>
+<li>D.1 Creating Guardrails for Alignment and Security
+<ul>
+<li>D.1.1 Exercise: Designing Prompts for Sentiment Analysis with Safety Checks</li>
+<li>D.1.2 Exercise: Implementing a Prompt Injection Detection Mechanism</li>
+<li>D.1.3 Exercise: Developing Prompts for Content Moderation and Filtering</li>
+</ul>
+</li>
+<li>D.2 Building and Using Prompt Evaluation Matrices
+<ul>
+<li>D.2.1 Exercise: Defining Key Evaluation Metrics for Different Prompting Tasks</li>
+<li>D.2.2 Exercise: Creating a Prompt to Generate an Evaluation Matrix for a Specific Use Case (e.g., Summarization)</li>
+<li>D.2.3 Exercise: Implementing a Simple Scoring System Based on a Prompt Evaluation Matrix</li>
+</ul>
+</li>
+<li>D.3 Applying Recent Prompt Optimization Techniques
+<ul>
+<li>D.3.1 Exercise: Implementing and Comparing Different Chain-of-Thought Prompting Strategies</li>
+<li>D.3.2 Exercise: Optimizing Few-Shot Examples for Improved Performance on a Specific Task</li>
+<li>D.3.3 Exercise: Experimenting with Techniques like Self-Consistency Decoding or Program-Aided Language Models (PAL)</li>
+</ul>
+</li>
+<li>D.4 Advanced Prompt Chaining and Workflow Design
+<ul>
+<li>D.4.1 Exercise: Designing a Multi-Step Prompt Chain for a Complex Information Extraction Task</li>
+<li>D.4.2 Exercise: Creating a Workflow Using Multiple Prompts to Generate a Comprehensive Report</li>
+</ul>
+</li>
+<li>D.5 Prompt Engineering for Specific Industry Applications (Hands-on)
+<ul>
+<li>D.5.1 Exercise: Designing Prompts for Generating Marketing Copy with Specific Brand Guidelines</li>
+<li>D.5.2 Exercise: Creating Prompts for Extracting Key Insights from Financial Documents</li>
+<li>D.5.3 Exercise: Developing Prompts for Generating Code in a Specific Programming Language with Error Handling</li>
+</ul>
+</li>
+<li>D.6 Experimenting with LLM Parameters and Prompt Sensitivity
+<ul>
+<li>D.6.1 Exercise: Analyzing the Impact of Temperature and Top-p Sampling on Creative Text Generation</li>
+<li>D.6.2 Exercise: Investigating How Subtle Changes in Prompt Wording Affect Model Output and Bias</li>
+</ul>
+</li>
+</ul>
+<h3 id="index"><a class="header" href="#index">Index</a></h3>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+                            <a rel="next prefetch" href="part_1.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+                    <a rel="next prefetch" href="part_1.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
